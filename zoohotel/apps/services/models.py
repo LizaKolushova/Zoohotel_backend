@@ -1,4 +1,6 @@
 from django.db import models
+from core.models import SystemUser
+from animals.models import Animal
 
 class AdditionalService(models.Model):
     name = models.CharField(max_length=255)

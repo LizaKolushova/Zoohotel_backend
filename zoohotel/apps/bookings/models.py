@@ -1,4 +1,8 @@
 from django.db import models
+from hotels.models import Hotel
+from hotels.models import HotelPricing
+from animals.models import Client
+from animals.models import Animal
 
 class Booking(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
