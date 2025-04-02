@@ -91,26 +91,6 @@ AUTH_USER_MODEL = 'core.SystemUser'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'std_1728_zoohotel',
-#         'USER': 'std_1728_zoohotel',
-#         'PASSWORD': 'webzoohotel',
-#         'HOST': 'std-mysql.ist.mospolytech.ru',
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#             'charset': 'utf8mb4',
-#         },
-#         # Отключаем проверки (включая проверку версии MySQL)
-#         'TEST': {
-#             'CHARSET': 'utf8mb4',
-#             'COLLATION': 'utf8mb4_unicode_ci',
-#         }
-#     }
-# }
-
 # # Отключаем системные проверки базы данных
 # SILENCED_SYSTEM_CHECKS = [
 #     'django.db.backends.mysql',
