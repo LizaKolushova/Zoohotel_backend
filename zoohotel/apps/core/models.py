@@ -19,7 +19,30 @@ class RolePermission(models.Model):
     permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
 
 class SystemUser(AbstractUser):
-    role = models.ForeignKey(Role, null=True, blank=True, on_delete=models.SET_NULL)
-    phone = models.CharField(max_length=20)
-    email = models.EmailField(unique=True)
-
+    role = models.ForeignKey(
+        Role,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name='Роль'
+    )
+    
+    class Meta:
+        db_table = 'system_users'
+    
+    groups = models.ManyToManyField(
+        'auth.Group',
+        verbose_name='groups',
+        blank=True,
+        help_text='The groups this user belongs to.',
+        related_name='systemuser_set',
+        related_query_name='systemuser',
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        verbose_name='user permissions',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        related_name='systemuser_set',
+        related_query_name='systemuser',
+    )

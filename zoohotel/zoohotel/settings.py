@@ -11,9 +11,18 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import sys
+import os
+# import logging
+# import warnings
+
+# warnings.filterwarnings("ignore", category=RuntimeWarning, module="django.db.backends.mysql.base")
+# logging.basicConfig(level=logging.DEBUG)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.core.apps.CoreConfig',
+    'apps.hotels.apps.HotelsConfig',
+    'apps.animals.apps.AnimalsConfig',
+    'apps.bookings.apps.BookingsConfig',
+    'apps.services.apps.ServicesConfig',
+    'apps.notifications.apps.NotificationsConfig',
+    'simple_history',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -69,17 +86,43 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'zoohotel.wsgi.application'
 
+AUTH_USER_MODEL = 'core.SystemUser'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'std_1728_zoohotel',
+#         'USER': 'std_1728_zoohotel',
+#         'PASSWORD': 'webzoohotel',
+#         'HOST': 'std-mysql.ist.mospolytech.ru',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'charset': 'utf8mb4',
+#         },
+#         # Отключаем проверки (включая проверку версии MySQL)
+#         'TEST': {
+#             'CHARSET': 'utf8mb4',
+#             'COLLATION': 'utf8mb4_unicode_ci',
+#         }
+#     }
+# }
+
+# # Отключаем системные проверки базы данных
+# SILENCED_SYSTEM_CHECKS = [
+#     'django.db.backends.mysql',
+#     'mysql.E001',  # Проверка версии MySQL
+# ]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -103,13 +146,24 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
+
+gettext = lambda s: s
+
+LANGUAGES = (
+    ('ru', gettext(u'Русский')),
+    ('en', gettext(u'Английский')),
+)
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 
 
 # Static files (CSS, JavaScript, Images)
