@@ -58,7 +58,7 @@ class RolePermissionAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone')}),
+        ('Personal info', {'fields': ('last_name','first_name', 'middle_name', 'email', 'phone')}),
         ('Permissions', {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions', 'role'),
         }),
@@ -67,15 +67,13 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'phone'),
+            'fields': ('username', 'password1', 'password2', 'last_name','first_name', 'middle_name', 'phone'),
         }),
     )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'phone')
+    list_display = ('username', 'email', 'first_name', 'middle_name', 'last_name', 'is_staff', 'phone')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
-    search_fields = ('username', 'first_name', 'last_name', 'email', 'phone')
+    search_fields = ('username', 'last_name', 'first_name', 'middle_name',  'email', 'phone')
     ordering = ('username',)
 
 admin.site.register(SystemUser, CustomUserAdmin)
-
-# Отменяем регистрацию стандартной группы, если нужно
 admin.site.unregister(Group)

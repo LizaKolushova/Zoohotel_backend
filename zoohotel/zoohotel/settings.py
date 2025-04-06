@@ -47,12 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.core.apps.CoreConfig',
-    'apps.hotels.apps.HotelsConfig',
-    'apps.animals.apps.AnimalsConfig',
-    'apps.bookings.apps.BookingsConfig',
-    'apps.services.apps.ServicesConfig',
-    'apps.notifications.apps.NotificationsConfig',
+    'core.apps.CoreConfig',
+    'hotels.apps.HotelsConfig',
+    'animals.apps.AnimalsConfig',
+    'bookings.apps.BookingsConfig',
+    'services.apps.ServicesConfig',
+    'notifications.apps.NotificationsConfig',
     'rest_framework',
     'django_filters',
     'simple_history',
@@ -157,7 +157,7 @@ STATIC_URL = 'static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 

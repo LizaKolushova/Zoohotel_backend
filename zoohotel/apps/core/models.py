@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# core/models.py
 class Organization(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
@@ -41,6 +40,7 @@ class RolePermission(models.Model):
         verbose_name = 'Разрешение роли'
         verbose_name_plural = 'Разрешения ролей'
 
+
 class SystemUser(AbstractUser):
     role = models.ForeignKey(
         Role,
@@ -54,6 +54,12 @@ class SystemUser(AbstractUser):
         blank=True,
         null=True,
         verbose_name='Телефон'
+    )
+    middle_name = models.CharField(
+        max_length=150,
+        blank=True,
+        null=True,
+        verbose_name='Отчество'
     )
     
     class Meta:
