@@ -55,36 +55,27 @@ class RolePermissionAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     history_list_display = ['role', 'permission']
     autocomplete_fields = ['role', 'permission']
 
-@admin.register(SystemUser)
-class CustomUserAdmin(UserAdmin, ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('username', 'email', 'first_name', 'last_name', 'get_role', 'is_staff')
-    list_filter = ('is_staff', 'is_superuser', 'is_active')
-    search_fields = ('username', 'email', 'first_name', 'last_name', 'role__name')
-    ordering = ('username',)
-    history_list_display = ['username', 'email', 'get_role']
-    
+class CustomUserAdmin(UserAdmin):
     fieldsets = (
-        ('Основная информация', {'fields': ('username', 'password')}),
-        ('Личная информация', {'fields': ('first_name', 'last_name', 'email', 'phone', 'role')}),
-        ('Разрешения', {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone')}),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions', 'role'),
         }),
-        ('Важные даты', {'fields': ('last_login', 'date_joined')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
-    
     add_fieldsets = (
-        ('Создание пользователя', {
+        (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2', 'role'),
+            'fields': ('username', 'password1', 'password2', 'phone'),
         }),
     )
-    
-    filter_horizontal = ('groups', 'user_permissions',)
-    
-    def get_role(self, obj):
-        return obj.role.name if obj.role else None
-    get_role.short_description = 'Роль'
-    get_role.admin_order_field = 'role__name'
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'phone')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    search_fields = ('username', 'first_name', 'last_name', 'email', 'phone')
+    ordering = ('username',)
+
+admin.site.register(SystemUser, CustomUserAdmin)
 
 # Отменяем регистрацию стандартной группы, если нужно
 admin.site.unregister(Group)

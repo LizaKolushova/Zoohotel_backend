@@ -15,7 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
+from rest_framework.routers import DefaultRouter
+from apps.animals.views import *
+
+router = DefaultRouter()
+router.register(r'animal-types', AnimalTypeViewSet)
+router.register(r'clients', ClientViewSet)
+router.register(r'animals', AnimalViewSet)
+router.register(r'animal-passports', AnimalPassportViewSet)
+router.register(r'vaccinations', VaccinationViewSet)
+router.register(r'treatments', TreatmentViewSet)
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
+    path('grappelli/', include('grappelli.urls')),
+    path('api/', include(router.urls)),
 ]

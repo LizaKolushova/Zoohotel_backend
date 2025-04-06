@@ -13,8 +13,19 @@ class Booking(models.Model):
     status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('rejected', 'Rejected')])
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
+    class Meta:
+        db_table = 'bookings'
+        verbose_name = 'Бронирование'
+        verbose_name_plural = 'Бронирования'
+
+
 class Accommodation(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
+
+    class Meta:
+        db_table = 'accommodations'
+        verbose_name = 'Размещение'
+        verbose_name_plural = 'Размещения'
